@@ -28,3 +28,15 @@ insert into Joueur (Prenom, Nom, DateNaissance, IdEquipe) values ('Amélie', 'Le
 insert into Joueur (Prenom, Nom, DateNaissance, IdEquipe) values ('Céline', 'Czajkowski', '2001-03-20', 2);
 insert into Joueur (Prenom, Nom, DateNaissance, IdEquipe) values ('Mélinda', 'Pedican', '1995-05-04', 2);
 insert into Joueur (Prenom, Nom, DateNaissance, IdEquipe) values ('Lauréna', 'McGiffin', '1982-06-25', 1);
+
+/*  DELETE
+FROM Joueur 
+WHERE DateNaissance<'1991-01-01' AND DateNaissance>'1979-12-31'; */
+
+/* DELETE
+FROM Joueur
+WHERE Nom LIKE 'M%' AND Prenom LIKE '%e'; */
+
+DELETE 
+FROM Joueur 
+WHERE IdJoueur>3;

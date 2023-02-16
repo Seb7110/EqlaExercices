@@ -91,10 +91,36 @@ public class Auteur {
         }
     }
 
+    public static void insertAuteur(Auteur _auteur) {
+        try (ClassDb db = new ClassDb()) {
+            Connection con = db.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("INSERT INTO auteur (nom, prenom, date_naissance, nationalite) VALUES (?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, _auteur.getNom());
+            pstmt.setString(2, _auteur.getPrenom());
+            java.sql.Date dateSql = new java.sql.Date(_auteur.date_naissance.getTime());
+            pstmt.setDate(3, dateSql);
+            pstmt.setString(4, _auteur.getNationalite());
+
+            int _nbEnregistrement = pstmt.executeUpdate();
+            
+            if (_nbEnregistrement == 1) {
+                System.out.println("L'auteur a bien été ajouté.");
+                ResultSet rs = pstmt.getGeneratedKeys();
+                if(rs.next()){
+                    Integer id =rs.getInt("id");
+                    _auteur.id = id;
+                }
+
+            } else {
+                System.out.println("Aucun auteur n'a été ajouté;");
+            }
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
     public static void DisplayAuteur(String _nom) {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Entrez le nom de l'auteur que vous recherchez.");
-        _nom = sc.nextLine();
         try (ClassDb db = new ClassDb()) {
             Connection con = db.getConnection();
             PreparedStatement pstmt = con
